@@ -3,6 +3,7 @@
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Campus;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -33,6 +34,14 @@ Route::get('/campuses', function () {
 Route::get('/add-campus', function () {
     return view('admin.pages.add_campus');
 })->middleware(['auth', 'verified'])->name('add_campus');
+
+Route::get('/edit-campus/{record}', function ($record) {
+    $campus = Campus::findOrFail($record);
+    return view('admin.pages.edit_campus', ['record' => $campus]);
+})
+    ->middleware(['auth', 'verified'])
+    ->name('edit_campus');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

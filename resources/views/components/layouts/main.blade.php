@@ -352,6 +352,10 @@
     @vite('resources/js/app.js')
 
     {{-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> --}}
+    <!-- Load Google Maps API -->
+<script async
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8QJxumfJVJaALr_rXwOofDFbPL5-3hf0&callback=initMap">
+</script>
 </body>
 
 </html>

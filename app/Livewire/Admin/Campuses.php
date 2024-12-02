@@ -23,12 +23,19 @@ class Campuses extends Component implements HasForms, HasTable
             ->query(Campus::query())
             ->columns([
                 TextColumn::make('name'),
+                TextColumn::make('latitude'),
+                TextColumn::make('longitude'),
+                TextColumn::make('radius'),
             ])
             ->filters([
                 // ...
             ])
             ->actions([
-                // ...
+                Action::make('update_campus')
+                ->label('Edit')
+                ->icon('heroicon-o-pencil')
+                ->color('success')
+                ->url(fn (Campus $record): string => route('edit_campus', $record))
             ])
             ->headerActions([
                 Action::make('add_campus')
