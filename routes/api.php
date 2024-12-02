@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CourseController;
 
 
 Route::middleware(['guest'])->group(function () {
@@ -20,4 +21,5 @@ Route::get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('user', [AuthController::class, 'userDetails']);
+    Route::get('/courses/available', [CourseController::class, 'getAvailableCourses']);
 });
