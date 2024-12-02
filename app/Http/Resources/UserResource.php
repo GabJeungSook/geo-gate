@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\UserDetailsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -22,6 +23,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'role' => $this->role,
             'image' => $this->getImage(),
+            'user_details' => new UserDetailsResource($this->whenLoaded('userDetails')),
         ];
     }
 }

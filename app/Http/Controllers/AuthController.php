@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Helpers\ApiResponse;
+use App\Http\Resources\UserDetailsResource;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use Laravel\Socialite\Facades\Socialite;
@@ -52,13 +53,14 @@ class AuthController extends Controller
 
     public function signInWithGoogle(Request $request)
 {
+
     $googleUser = Socialite::driver('google')->userFromToken($request->input('token'));
 
-
+    
     $user = User::where('email', $googleUser->getEmail())->first();
 
     if ($user) {
-
+        
         $user->update([
             'provider' => 'GOOGLE',
             'provider_id' => $googleUser->getId(),
@@ -67,7 +69,7 @@ class AuthController extends Controller
             'email_verified_at' => now(),
         ]);
     } else {
-
+ 
         $user = User::create([
             'provider' => 'GOOGLE',
             'provider_id' => $googleUser->getId(),
@@ -78,20 +80,59 @@ class AuthController extends Controller
         ]);
     }
 
-
-    if (!$user->customer) {
-        $user->customer()->create([
-            'full_name' => $user->name,
+ 
+    if (!$user->userDetails) {
+        $user->userDetails()->create([
+            'first_name' => $googleUser->user['given_name'] ?? null,
+            'last_name' => $googleUser->user['family_name'] ?? null,
         ]);
     }
 
 
     $token = $user->createToken('mobile_device')->plainTextToken;
-      return ApiResponse::success([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'user' => new UserResource($user),
-        ], 'User logged in successfully');
+
+    return ApiResponse::success([
+        'access_token' => $token,
+        'token_type' => 'Bearer',
+        'user' => new UserResource($user->load('userDetails')), 
+    ], 'User logged in successfully');
 }
 
+
+public function userDetails(Request $request)
+    {
+        $user = $request->user();
+
+        return ApiResponse::success(
+            new UserResource($user->load('userDetails')), // Include userDetails
+            'User details retrieved successfully'
+        );
+    }
+
+    public function updateUserDetails(Request $request)
+{
+    $user = $request->user(); 
+
+
+    $validated = $request->validate([
+        'first_name' => 'nullable|string|max:255',
+        'last_name' => 'nullable|string|max:255',
+        'full_address' => 'nullable|string|max:500',
+        'birthday' => 'nullable|date',
+        'course_id' => 'nullable|exists:courses,id', 
+    ]);
+
+   
+    if ($user->userDetails) {
+        $user->userDetails->update($validated); 
+    } else {
+        $user->userDetails()->create($validated); 
+    }
+
+   
+    return ApiResponse::success(
+        new UserResource($user),
+        'User details updated successfully'
+    );
+}
 }
