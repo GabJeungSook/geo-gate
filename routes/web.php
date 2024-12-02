@@ -12,8 +12,8 @@ Route::get('/', function () {
 
 Route::middleware(['guest'])->group(function () {
 
-    Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->middleware('guest');
-    Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->middleware('guest');
+    Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->middleware('guest')->name('auth.google.redirect');
+    Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->middleware('guest')->name('auth.google.callback');
    
 });
 
