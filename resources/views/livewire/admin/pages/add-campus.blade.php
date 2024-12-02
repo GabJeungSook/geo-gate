@@ -37,7 +37,6 @@
         </div>
     </div>
 </div>
-
 <script>
     // Google Maps initialization
     let map;
@@ -60,6 +59,7 @@
             position: defaultLocation,
             map: map,
             title: "Default Location",
+            draggable: true, // Allow the marker to be draggable
         });
 
         circle = new google.maps.Circle({
@@ -79,6 +79,33 @@
         document.getElementById("markLocation").addEventListener("click", markLocation);
         document.getElementById("radiusSlider").addEventListener("input", updateRadiusFromSlider);
         document.getElementById("radiusInput").addEventListener("input", updateSliderFromInput);
+
+        // Add a click event listener to the map
+        map.addListener("click", (event) => {
+            const position = event.latLng;
+
+            // Update marker position
+            marker.setPosition(position);
+
+            // Update latitude and longitude inputs
+            document.getElementById("latitudeInput").value = position.lat();
+            document.getElementById("longitudeInput").value = position.lng();
+
+            // Update circle center
+            circle.setCenter(position);
+        });
+
+        // Update inputs when the marker is dragged
+        marker.addListener("dragend", () => {
+            const position = marker.getPosition();
+
+            // Update latitude and longitude inputs
+            document.getElementById("latitudeInput").value = position.lat();
+            document.getElementById("longitudeInput").value = position.lng();
+
+            // Update circle center
+            circle.setCenter(position);
+        });
     }
 
     // Function to mark a location based on input
@@ -123,3 +150,4 @@
         }
     }
 </script>
+
