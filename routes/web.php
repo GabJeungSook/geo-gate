@@ -11,9 +11,17 @@ Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/courses', function () {
+    return view('admin.courses');
+})->middleware(['auth', 'verified'])->name('courses');
+
 Route::get('/campuses', function () {
     return view('admin.campuses');
 })->middleware(['auth', 'verified'])->name('campuses');
+
+Route::get('/add-campus', function () {
+    return view('admin.pages.add_campus');
+})->middleware(['auth', 'verified'])->name('add_campus');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
