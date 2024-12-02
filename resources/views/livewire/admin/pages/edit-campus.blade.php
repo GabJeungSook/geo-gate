@@ -31,7 +31,7 @@
     <div class="mt-10 flex justify-end space-x-3">
         <button class="bg-gray-100 p-2 px-6 rounded-md text-gray-600">Cancel</button>
         <div>
-            {{ $this->saveAction }}
+            {{ $this->updateAction }}
          
             <x-filament-actions::modals />
         </div>
@@ -45,7 +45,7 @@
     let circle;
 
     function initMap() {
-        const defaultLocation = { lat: 6.495520273051356, lng: 124.84250229535617 }; // Default location
+        const defaultLocation = { lat: {{$latitude}}, lng: {{$longitude}} }; // Default location
 
         const defaultZoom = 20;
 

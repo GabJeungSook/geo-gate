@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('campuses', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Campus name
-            $table->decimal('latitude', 10, 7); // Latitude with precision
-            $table->decimal('longitude', 10, 7); // Longitude with precision
-            $table->float('geofence_range'); // Geofence range in meters (or your desired unit)
+            $table->text('latitude')->nullable(); // Latitude with precision
+            $table->text('longitude')->nullable(); // Longitude with precision
+            $table->text('radius')->nullable(); // Geofence range in meters (or your desired unit)
             $table->timestamps();
         });
     }
