@@ -6,11 +6,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
-class User extends Authenticatable
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Laravel\Sanctum\HasApiTokens;
+class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
+    use InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'provider',
+        'provider_id',
     ];
 
     /**
@@ -45,4 +50,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')->singleFile();
+    }
+
+    public function getImage()
+    {
+        if ($this->hasMedia('avatar')) {
+            return $this->getFirstMediaUrl('avatar');
+        }
+    
+        return url('images/placeholder-image.jpg');
+
+
+    }   
+
 }
