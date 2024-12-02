@@ -100,14 +100,15 @@ class AuthController extends Controller
 
 
 public function userDetails(Request $request)
-    {
-        $user = $request->user();
+{
+    $user = User::withRelations()->find($request->user()->id);
 
-        return ApiResponse::success(
-            new UserResource($user->load('userDetails')), // Include userDetails
-            'User details retrieved successfully'
-        );
-    }
+    return ApiResponse::success(
+        new UserResource($user), // Pass the user resource with loaded relationships
+        'User details retrieved successfully'
+    );
+}
+
 
     public function updateUserDetails(Request $request)
 {
