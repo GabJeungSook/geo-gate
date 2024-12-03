@@ -23,8 +23,7 @@ class UserDetailsResource extends JsonResource
             'full_address' => $this->full_address ?? null,
             'birthday' => $this->birthday ? Carbon::parse($this->birthday)->format('F d, Y') : null,
             'course_id' => $this->course_id ?? null,
-            'created_at' => $this->created_at ? $this->created_at->toDateTimeString() : null,
-            'updated_at' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
+           
         ];
 }
 }

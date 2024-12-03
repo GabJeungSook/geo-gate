@@ -14,6 +14,13 @@ class CampusResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name ?? null,
+            'latitude' => $this->longitude ?? null,
+            'longitude' => $this->longitude ?? null,
+            'radius' => $this->radius ,
+        
+        ];
     }
 }
