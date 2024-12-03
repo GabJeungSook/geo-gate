@@ -58,6 +58,10 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaCollection('avatar')->singleFile();
     }
 
+    public function fullName(): string
+    {
+        return "{$this->first_name } {$this->last_name}";
+    }
     public function getImage()
     {
         if ($this->hasMedia('avatar')) {
