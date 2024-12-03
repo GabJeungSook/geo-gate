@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FCMController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DeviceController;
 
 
 Route::middleware(['guest'])->group(function () {
@@ -23,12 +24,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('user', [AuthController::class, 'userDetails']);
     Route::get('/courses/available', [CourseController::class, 'getAvailableCourses']);
+
+    Route::post('devices/register', [DeviceController::class, 'storeOrUpdate']);
+    Route::delete('devices/{deviceId}', [DeviceController::class, 'destroy']);
 });
 
 
 Route::get('/send-notification', function(){
-    FCMController::sendPushNotification('fUyNeZkhQ-6wn2-S-Jn48C:APA91bHZSBE0Lu8bOBpc98TPcXi6BywPoTpFr9aXfQjuJjIhK_6H8mlaoNRdpu_U2YXbLghaM-v1DiNH_8jMLcrhLcoCoPL4eiF8ioZp8oacivLXBqi1SC8', 'Task Assigned', 'test', [
+    $response = FCMController::sendPushNotification(
+        'fUyNeZkhQ-6wn2-S-Jn48C:APA91bHZSBE0Lu8bOBpc98TPcXi6BywPoTpFr9aXfQjuJjIhK_6H8mlaoNRdpu_U2YXbLghaM-v1DiNH_8jMLcrhLcoCoPL4eiF8ioZp8oacivLXBqi1SC8',
+        'Task Assigned',
+        'This is a test message',
+        ['notification' => 'task']
+    );
 
-        'notification' => 'task',
-    ]);
+    return $response;
 });
