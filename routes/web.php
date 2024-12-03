@@ -42,6 +42,10 @@ Route::get('/edit-campus/{record}', function ($record) {
     ->middleware(['auth', 'verified'])
     ->name('edit_campus');
 
+Route::get('/events', function () {
+    return view('admin.events');
+})->middleware(['auth', 'verified'])->name('events');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

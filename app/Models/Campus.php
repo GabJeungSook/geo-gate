@@ -19,4 +19,9 @@ class Campus extends Model
     {
         return $this->hasMany(Course::class);
     }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }

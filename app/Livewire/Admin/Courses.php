@@ -57,6 +57,7 @@ class Courses extends Component implements HasForms, HasTable
                 ->model(Course::class)
                 ->form([
                     Select::make('campus_id')
+                    ->label('Campus')
                     ->relationship('campus', 'name'),
                     TextInput::make('course_code')
                         ->required()
