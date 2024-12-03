@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Device;
 use App\Models\UserDetail;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
@@ -62,11 +63,11 @@ class User extends Authenticatable implements HasMedia
         if ($this->hasMedia('avatar')) {
             return $this->getFirstMediaUrl('avatar');
         }
-    
+
         return url('images/placeholder-image.jpg');
 
 
-    }   
+    }
 
     public function userDetails()
     {
@@ -81,9 +82,12 @@ class User extends Authenticatable implements HasMedia
     public function scopeWithRelations($query)
     {
         return $query->with([
-            'userDetails.course.campus' 
+            'userDetails.course.campus'
         ]);
     }
 
+    public function devices(){
+        return $this->hasMany(Device::class);
+    }
 
 }
