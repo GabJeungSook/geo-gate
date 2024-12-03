@@ -101,7 +101,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error('Google Sign-In Error: ' . $e->getMessage());
-            return ApiResponse::error('Failed to sign in with Google.', 500);
+            return ApiResponse::error('Failed to sign in with Google.'.$e->getMessage(), 500);
         }
     }
 
