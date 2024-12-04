@@ -23,6 +23,7 @@ Route::get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('user', [AuthController::class, 'userDetails']);
+    Route::get('/courses/available', [CourseController::class, 'getAvailableCourses']);
     Route::put('user/details', [AuthController::class, 'updateUserDetails']);
    
 
