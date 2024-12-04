@@ -4,6 +4,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Campus;
+use App\Models\Event;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -45,6 +46,13 @@ Route::get('/edit-campus/{record}', function ($record) {
 Route::get('/events', function () {
     return view('admin.events');
 })->middleware(['auth', 'verified'])->name('events');
+
+Route::get('/event-details/{record}', function ($record) {
+    $event = Event::findOrFail($record);
+    return view('admin.pages.event_details', ['record' => $event]);
+})
+    ->middleware(['auth', 'verified'])
+    ->name('event_details');
 
 
 Route::middleware('auth')->group(function () {
