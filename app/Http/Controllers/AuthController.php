@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Device;
 use App\Helpers\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -152,6 +153,23 @@ class AuthController extends Controller
         return ApiResponse::error('Failed to update user details.', 500);
     }
 }
+
+
+public function logout(Request $request)
+    {
+        $user = $request->user();
+        $user->tokens()->delete();
+
+        if ($request->has('device_id')) {
+            Device::where('user_id', $user->id)
+                  ->where('device_id', $request->device_id)
+                  ->delete();
+        }
+
+        return ApiResponse::success(null, 'Logged out successfully');
+    }
+
+    
 
 
     
