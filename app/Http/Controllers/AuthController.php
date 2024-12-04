@@ -117,43 +117,49 @@ class AuthController extends Controller
     }
 
     public function updateUserDetails(Request $request)
-{
-    $user = $request->user();
-
+    {
+        $user = $request->user();
     
-    $validated = $request->validate([
-        
-        'first_name' => 'sometimes|string|max:255',
-        'last_name' => 'sometimes|string|max:255',
-        'full_address' => 'sometimes|string|max:500',
-        'birthday' => 'sometimes|date',
-        'course_id' => 'required|exists:courses,id',
-    ]);
-
-    DB::beginTransaction();
-
-    try {
-      
-        if ($user->userDetails) {
-            $user->userDetails->update($validated);
-        } else {
-            $user->userDetails()->create($validated);
+        $validated = $request->validate([
+            'first_name' => 'sometimes|string|max:255',
+            'last_name' => 'sometimes|string|max:255',
+            'full_address' => 'sometimes|string|max:500',
+            'birthday' => 'sometimes|date',
+            'course_id' => 'required|exists:courses,id',
+        ]);
+    
+        // Parse the formatted date back to 'Y-m-d' if necessary
+        if (isset($validated['birthday'])) {
+            try {
+                $validated['birthday'] = \Carbon\Carbon::parse($validated['birthday'])->format('Y-m-d');
+            } catch (\Exception $e) {
+                return ApiResponse::error('Invalid birthday format.', 422);
+            }
         }
-
-        DB::commit();
-
-        return ApiResponse::success(
-            new UserResource($user->load('userDetails.course.campus')),
-            'User details updated successfully'
-        );
-    } catch (\Exception $e) {
-        DB::rollBack();
-
-        \Log::error('User Details Update Error:', ['exception' => $e]);
-
-        return ApiResponse::error('Failed to update user details.'.$e->getMessage(), 500);
+    
+        DB::beginTransaction();
+    
+        try {
+            if ($user->userDetails) {
+                $user->userDetails->update($validated);
+            } else {
+                $user->userDetails()->create($validated);
+            }
+    
+            DB::commit();
+    
+            return ApiResponse::success(
+                new UserResource($user->load('userDetails.course.campus')),
+                'User details updated successfully'
+            );
+        } catch (\Exception $e) {
+            DB::rollBack();
+    
+            \Log::error('User Details Update Error:', ['exception' => $e]);
+    
+            return ApiResponse::error('Failed to update user details. '.$e->getMessage(), 500);
+        }
     }
-}
 
 
 public function logout(Request $request)
