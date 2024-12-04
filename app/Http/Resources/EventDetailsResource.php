@@ -19,7 +19,7 @@ class EventDetailsResource extends JsonResource
         
         return [
             'id' => $this->id,
-            'event_description' => $this->title ?? null,
+            'event_description' => $this->event_description ?? null,
             'start_date' => $this->start_date ? $this->formattedDate($this->start_date) : null,
             'end_date' => $this->end_date ? $this->formattedDate($this->end_date) : null,
             'is_active' => $this->is_active ?? null,
