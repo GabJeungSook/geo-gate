@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\EventSchedule;
+use App\Models\PreRegistration;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
@@ -18,6 +20,15 @@ class Event extends Model
         return $this->belongsTo(Campus::class);
     }
 
+    public function eventSchedules(){
+        return $this->hasMany(EventSchedule::class);
+    }
+    public function preRegistrations(){
+        return $this->hasMany(PreRegistration::class);
+    }
+
+
+
    
    public function scopeActiveEvent($query)
 {
@@ -26,6 +37,6 @@ class Event extends Model
 
      public function scopeWithRelations($query)
    {
-       return $query->with(['campus']);
+       return $query->with(['campus','eventSchedules']);
    }
 }
