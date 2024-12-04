@@ -116,36 +116,43 @@ class AuthController extends Controller
     }
 
     public function updateUserDetails(Request $request)
-    {
-        $user = $request->user();
+{
+    $user = $request->user();
 
-        $validated = $request->validate([
-            'first_name' => 'nullable|string|max:255',
-            'last_name' => 'nullable|string|max:255',
-            'full_address' => 'nullable|string|max:500',
-            'birthday' => 'nullable|date',
-            'course_id' => 'nullable|exists:courses,id',
-        ]);
+    
+    $validated = $request->validate([
+        'first_name' => 'required|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'full_address' => 'required|string|max:500',
+        'birthday' => 'required|date',
+        'course_id' => 'required|exists:courses,id',
+    ]);
 
-        DB::beginTransaction();
+    DB::beginTransaction();
 
-        try {
-            if ($user->userDetails) {
-                $user->userDetails->update($validated);
-            } else {
-                $user->userDetails()->create($validated);
-            }
-
-            DB::commit();
-
-            return ApiResponse::success(
-                new UserResource($user->load('userDetails.course.campus')),
-                'User details updated successfully'
-            );
-        } catch (\Exception $e) {
-            DB::rollBack();
-            \Log::error('User Details Update Error: ' . $e->getMessage());
-            return ApiResponse::error('Failed to update user details.', 500);
+    try {
+        // Update or create user details
+        if ($user->userDetails) {
+            $user->userDetails->update($validated);
+        } else {
+            $user->userDetails()->create($validated);
         }
+
+        DB::commit();
+
+        return ApiResponse::success(
+            new UserResource($user->load('userDetails.course.campus')),
+            'User details updated successfully'
+        );
+    } catch (\Exception $e) {
+        DB::rollBack();
+
+        \Log::error('User Details Update Error:', ['exception' => $e]);
+
+        return ApiResponse::error('Failed to update user details.', 500);
     }
+}
+
+
+    
 }
