@@ -36,7 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     
     Route::get('/courses/available', [CourseController::class, 'getAvailableCourses']);
-    Route::get('/active-event', [EventController::class,'getEvent']);
+    Route::get('/active-event', [EventController::class,'getActiveEvent']);
     Route::get('/active-schedule/{eventId}', [EventController::class,'getActiveSchedule']);
 
     Route::post('/pre-registration', [PreRegistrationController::class, 'createOrUpdatePreRegistration']);
