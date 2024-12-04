@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\PreRegistrationController;
 
 
 Route::middleware(['guest'])->group(function () {
@@ -24,18 +25,23 @@ Route::get('/user', function (Request $request) {
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::get('user', [AuthController::class, 'userDetails']);
+    Route::get('/user', [AuthController::class, 'userDetails']);
+    Route::put('/user/details', [AuthController::class, 'updateUserDetails']);
+
+    Route::post('/devices/register', [DeviceController::class, 'storeOrUpdate']);
+    Route::delete('/devices/{deviceId}', [DeviceController::class, 'destroy']);
+    
+    
     Route::get('/courses/available', [CourseController::class, 'getAvailableCourses']);
-    Route::put('user/details', [AuthController::class, 'updateUserDetails']);
-   
+    Route::get('/active-event', [EventController::class,'getEvent']);
+    Route::get('/active-schedule/{eventId}', [EventController::class,'getActiveSchedule']);
+    Route::post('/pre-registration', [PreRegistrationController::class, 'createOrUpdatePreRegistration']);
 
-    Route::post('devices/register', [DeviceController::class, 'storeOrUpdate']);
-    Route::delete('devices/{deviceId}', [DeviceController::class, 'destroy']);
-
-
-    Route::get('active-event', [EventController::class,'getEvent']);
+    // time in
+    // time out 
+    // mark attendance 
 
     
 });

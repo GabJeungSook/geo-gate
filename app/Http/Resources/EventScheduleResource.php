@@ -24,6 +24,8 @@ class EventScheduleResource extends JsonResource
             'is_active' => $this->is_active,
             'created_at' => $this->created_at->format('l, F j, Y g:i A'),
             'updated_at' => $this->updated_at->format('l, F j, Y g:i A'),
+            'attendances' => AttendanceResource::collection($this->whenLoaded('attendances')),
+            
         ];
     }
 }

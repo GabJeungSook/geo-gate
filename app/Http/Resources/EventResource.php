@@ -15,8 +15,10 @@ class EventResource extends JsonResource
      * @return array<string, mixed>
      */
     public function toArray(Request $request): array
-    {
+    {   
+        $activeSchedule = $this->firstActiveSchedule(); 
         $preRegistration = $this->preRegistrations->where('user_id', $request->user()->id)->first();
+        
         return [
             'id' => $this->id,
             'event_description' => $this->title ?? null,
@@ -25,8 +27,10 @@ class EventResource extends JsonResource
             'is_active' => $this->is_active ?? null,
             'campus' => new CampusResource($this->whenLoaded('campus')),
             'event_schedules' => EventScheduleResource::collection($this->whenLoaded('eventSchedules')),
+            'active_schedule' => $activeSchedule ? new EventScheduleResource($activeSchedule) : null,
             'pre_registrations' => PreRegistrationResource::collection($this->whenLoaded('preRegistrations')), 
-            'has_pre_registration' => $preRegistration ? new PreRegistrationResource($preRegistration) : null, // Return pre-registration data or null
+            'has_pre_registration' => $preRegistration ? new PreRegistrationResource($preRegistration) : null, 
+            
         ];
     }
 

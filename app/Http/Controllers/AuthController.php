@@ -122,17 +122,18 @@ class AuthController extends Controller
 
     
     $validated = $request->validate([
-        'first_name' => 'required|string|max:255',
-        'last_name' => 'required|string|max:255',
-        'full_address' => 'required|string|max:500',
-        'birthday' => 'required|date',
+        
+        'first_name' => 'somtimes|string|max:255',
+        'last_name' => 'somtimes|string|max:255',
+        'full_address' => 'somtimes|string|max:500',
+        'birthday' => 'somtimes|date',
         'course_id' => 'required|exists:courses,id',
     ]);
 
     DB::beginTransaction();
 
     try {
-        // Update or create user details
+      
         if ($user->userDetails) {
             $user->userDetails->update($validated);
         } else {

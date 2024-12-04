@@ -61,6 +61,19 @@ class EventController extends Controller
 
     public function getActiveEvent(){
         $event = Event::activeEvent()->withRelations()->first();
-       return ApiResponse::success(new EventResource($event), 'Event retrieved successfully');
+         return ApiResponse::success(new EventResource($event), 'Event retrieved successfully');
+    }
+
+    public function getActiveSchedule(Request $request, $eventId){
+
+      
+
+    
+       
+    
+      
+        $event = Event::withRelations()->findOrFail($eventId);
+         return ApiResponse::success(new EventResource($event), 'Event retrieved successfully');
+
     }
 }
