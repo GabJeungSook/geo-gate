@@ -42,7 +42,7 @@ class EventDetails extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(EventSchedule::query())
+            ->query(EventSchedule::query()->where('event_id', $this->record->event_id))
             ->columns([
                 TextColumn::make('event.event_description'),
                 TextColumn::make('schedule_date')->formatStateUsing(fn ($record) => Carbon::parse($record->schedule_date)->format('F d, Y')),
