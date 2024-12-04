@@ -40,20 +40,12 @@ class Events extends Component implements HasForms, HasTable
                 // ...
             ])
             ->actions([
-                // EditAction::make()
-                // ->label('Edit')
-                // ->icon('heroicon-o-pencil')
-                // ->color('success')
-                // ->form([
-                //     Select::make('campus_id')
-                //     ->relationship('campus', 'name'),
-                //     TextInput::make('course_code')
-                //         ->required()
-                //         ->maxLength(255),
-                //     TextInput::make('course_description')
-                //         ->required()
-                //         ->maxLength(255),
-                // ])->successNotificationTitle('Course Updated')
+                Action::make('view_details')
+                ->label('View Details')
+                ->icon('heroicon-o-eye')
+                ->button()
+                ->color('warning')
+                ->url(fn (Event $record): string => route('event_details', $record))
                 
             ])
             ->headerActions([

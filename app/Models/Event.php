@@ -12,4 +12,9 @@ class Event extends Model
     {
         return $this->belongsTo(Campus::class);
     }
+
+    public function schedules()
+    {
+        return $this->hasMany(EventSchedule::class);
+    }
 }
