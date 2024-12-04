@@ -255,5 +255,12 @@ class CourseSeeder extends Seeder
         'course_code' => 'BSAGR-LUT',
         "course_description" => "Bachelor of Science in Agriculture"
     ]);
+
+    $campus = Campus::create([
+        "name" => "Brian Campus",
+        'latitude' => '6.63220252411989',
+        'longitude' => '124.60018272125544',
+        'radius' => '20',
+    ]);
     }
 }
