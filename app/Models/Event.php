@@ -23,11 +23,7 @@ class Event extends Model
     public function eventSchedules(){
         return $this->hasMany(EventSchedule::class);
     }
-    public function preRegistrations(){
-        return $this->hasMany(PreRegistration::class);
-    }
-
-
+   
 
    
    public function scopeActiveEvent($query)
@@ -37,7 +33,7 @@ class Event extends Model
 
      public function scopeWithRelations($query)
    {
-       return $query->with(['campus','eventSchedules','preRegistrations']);
+       return $query->with(['campus','eventSchedules']);
    }
 
    public function firstActiveSchedule()

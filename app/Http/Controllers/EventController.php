@@ -64,16 +64,17 @@ class EventController extends Controller
          return ApiResponse::success(new EventResource($event), 'Event retrieved successfully');
     }
 
-    public function getActiveSchedule(Request $request, $eventId){
-
-      
+    public function getActiveSchedule(Request $request, $eventId)
+{
+  
+    $event = Event::withRelations()->findOrFail($eventId);
 
     
-       
-    
-      
-        $event = Event::withRelations()->findOrFail($eventId);
-         return ApiResponse::success(new EventResource($event), 'Event retrieved successfully');
-
+    if (!$event->is_active) {
+        return ApiResponse::error('This event is no longer active.', 400); // Return error if not active
     }
+
+    return ApiResponse::success(new EventResource($event), 'Event retrieved successfully');
+}
+
 }

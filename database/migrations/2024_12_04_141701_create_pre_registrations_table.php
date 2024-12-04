@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pre_registrations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('event_id')->constrained('events')->onDelete('cascade');
+          
             $table->foreignId('event_schedule_id')->constrained('event_schedules')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->text('qr_code')->nullable();

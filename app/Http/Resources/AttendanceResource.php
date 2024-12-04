@@ -27,6 +27,7 @@ class AttendanceResource extends JsonResource
             'is_present' => $this->is_present , 
             'event_schedule' => new EventScheduleResource($this->whenLoaded('eventSchedule')),
             'user' => new UserResource($this->whenLoaded('user')),
+            'event' => new EventDetailsResource($this->whenLoaded('event')),
         ];
     }
 }

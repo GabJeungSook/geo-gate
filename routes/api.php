@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\PreRegistrationController;
 
 
@@ -37,11 +38,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/courses/available', [CourseController::class, 'getAvailableCourses']);
     Route::get('/active-event', [EventController::class,'getEvent']);
     Route::get('/active-schedule/{eventId}', [EventController::class,'getActiveSchedule']);
+
     Route::post('/pre-registration', [PreRegistrationController::class, 'createOrUpdatePreRegistration']);
 
-    // time in
-    // time out 
-    // mark attendance 
+
+    Route::get('/attendance', [AttendanceController::class, 'index']);
+    Route::post('/attendance/check-in', [AttendanceController::class, 'checkIn']);
+    Route::post('/attendance/check-out', [AttendanceController::class, 'checkOut']);
+    Route::post('/attendance/mark-absent', [AttendanceController::class, 'markAbsent']);
+    Route::post('/attendance/geofence-out', [AttendanceController::class, 'updateGeofenceOut']);
+
 
     
 });

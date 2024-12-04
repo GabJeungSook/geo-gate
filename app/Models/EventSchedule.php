@@ -22,13 +22,17 @@ class EventSchedule extends Model
         return $this->hasMany(PreRegistration::class);
     }
 
+
+
     public function attendances(){
         return $this->hasMany(Attendance::class);
     }
 
+
     public function scopeWithRelations($query){
-        $query->with(['attendances']);
+        $query->with(['event','attendances','preRegistrations',]);
     }
+
 
     
    
