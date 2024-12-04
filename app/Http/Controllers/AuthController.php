@@ -150,7 +150,7 @@ class AuthController extends Controller
 
         \Log::error('User Details Update Error:', ['exception' => $e]);
 
-        return ApiResponse::error('Failed to update user details.', 500);
+        return ApiResponse::error('Failed to update user details.'.$e->getMessage(), 500);
     }
 }
 
