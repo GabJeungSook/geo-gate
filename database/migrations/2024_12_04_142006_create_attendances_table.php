@@ -17,7 +17,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->text('latitude')->nullable(); 
             $table->text('longitude')->nullable();
-            $table->boolean('is_present'); 
+            $table->timestamp('in')->nullable();
+            $table->timestamp('out')->nullable();
+            $table->timestamp('geofence_out')->nullable();
+            $table->boolean('is_present')->default(0);
             $table->timestamps();
         });
     }
