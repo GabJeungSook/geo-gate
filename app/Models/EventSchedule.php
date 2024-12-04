@@ -18,6 +18,10 @@ class EventSchedule extends Model
         return $this->belongsTo(Event::class);
     }
 
+    public function pre_registrations(){
+        return $this->hasMany(PreRegistration::class);
+    }
+
     public function attendances(){
         return $this->hasMany(Attendance::class);
     }
