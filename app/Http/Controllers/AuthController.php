@@ -110,6 +110,8 @@ class AuthController extends Controller
     {
         $user = User::withRelations()->find($request->user()->id);
 
+        return ApiResponse::success($user);
+
         return ApiResponse::success(
             new UserResource($user),
             'User details retrieved successfully'
