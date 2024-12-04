@@ -13,8 +13,10 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Table;
+use Filament\Notifications\Notification;
 use Carbon\Carbon;
 use App\Models\Event;
 
@@ -35,6 +37,25 @@ class Events extends Component implements HasForms, HasTable
                 ->formatStateUsing(fn ($record) => Carbon::parse($record->start_date)->format('F d, Y'))->sortable(),
                 TextColumn::make('end_date')
                 ->formatStateUsing(fn ($record) => Carbon::parse($record->end_date)->format('F d, Y'))->sortable(),
+                ToggleColumn::make('is_active')->label('Active')
+                ->updateStateUsing(function ($record, $state) {
+                    $active = Event::where('is_active', true)->exists();
+                    if($record->is_active)
+                    {
+                        $record->update(['is_active' => false]);
+                    }else{
+                        if($active)
+                        {
+                            Notification::make()
+                            ->title('Operation Failed')
+                            ->body('You can only activate one (1) schedule at a time.')
+                            ->danger()
+                            ->send();
+                        } else {
+                            $record->is_active == false ? $record->update(['is_active' => true]) : $record->update(['is_active' => false]);
+                        }
+                    }
+                }),
             ])
             ->filters([
                 // ...
@@ -46,6 +67,7 @@ class Events extends Component implements HasForms, HasTable
                 ->button()
                 ->color('warning')
                 ->url(fn (Event $record): string => route('event_details', $record))
+                ->visible(fn (Event $record) => $record->is_active)
                 
             ])
             ->headerActions([
