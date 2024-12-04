@@ -20,13 +20,13 @@ class EventSeeder extends Seeder
             'end_date' => '2024-12-04',
             'is_active' => '0',
         ]);
-        $event->schedules()->create([
+        $event->eventSchedules()->create([
             'schedule_date'=>"2024-12-03",
             'start_time'=>"13:00",
             'end_time'=>"14:00",
             'is_active' => '0',
         ]);
-        $event->schedules()->create([
+        $event->eventSchedules()->create([
             'schedule_date'=>"2024-12-03",
             'start_time'=>"15:00",
             'end_time'=>"16:00",
