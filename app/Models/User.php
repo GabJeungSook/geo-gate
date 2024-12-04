@@ -63,15 +63,21 @@ class User extends Authenticatable implements HasMedia
         return "{$this->first_name } {$this->last_name}";
     }
     public function getImage()
-    {
-        if ($this->hasMedia('avatar')) {
-            return $this->getFirstMediaUrl('avatar');
-        }
-
-        return url('images/placeholder-image.jpg');
-
-
+{
+    
+    if (!empty($this->social_avatar)) {
+        return $this->social_avatar;
     }
+
+    
+    if ($this->hasMedia('avatar')) {
+        return $this->getFirstMediaUrl('avatar');
+    }
+
+    
+    return url('images/placeholder-image.jpg');
+}
+
 
     public function userDetails()
     {
