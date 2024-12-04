@@ -7,6 +7,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Repeater;
@@ -17,6 +18,7 @@ use Filament\Tables\Table;
 use Filament\Forms\Form;
 use App\Models\Campus;
 use App\Models\EventSchedule;
+use Filament\Notifications\Notification;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -46,6 +48,25 @@ class EventDetails extends Component implements HasForms, HasTable
                 TextColumn::make('schedule_date')->formatStateUsing(fn ($record) => Carbon::parse($record->schedule_date)->format('F d, Y')),
                 TextColumn::make('start_time')->formatStateUsing(fn ($record) => Carbon::parse($record->start_time)->format('h:i A')),
                 TextColumn::make('end_time')->formatStateUsing(fn ($record) => Carbon::parse($record->end_time)->format('h:i A')),
+                ToggleColumn::make('is_active')->label('Active')
+                ->updateStateUsing(function ($record, $state) {
+                    $active = EventSchedule::where('is_active', true)->exists();
+                    if($record->is_active)
+                    {
+                        $record->update(['is_active' => false]);
+                    }else{
+                        if($active)
+                        {
+                            Notification::make()
+                            ->title('Operation Failed')
+                            ->body('You can only activate one (1) schedule at a time.')
+                            ->danger()
+                            ->send();
+                        } else {
+                            $record->is_active == false ? $record->update(['is_active' => true]) : $record->update(['is_active' => false]);
+                        }
+                    }
+                }),
             ])
             ->filters([
                 // ...
@@ -92,20 +113,9 @@ class EventDetails extends Component implements HasForms, HasTable
                             ])
                         ])->createItemButtonLabel('Add time')
                     ])->reactive()->disableItemCreation(),
-                    // Repeater::make('members')
-                    // ->schema([
-                    //     Repeater::make('members')
-                    //         ->schema([
-                    //             TextInput::make('course_code')
-                    //             ->required()
-                    //             ->maxLength(255),])
-                    //             ->defaultItems($this->days),
-                    // ])
-                    // ->defaultItems($this->days),
                 ])
                 ->action(function (array $data) {
                     $dates_and_time = $this->mergeDateAndTime($data['schedule_dates']);
-                  
                     foreach ($dates_and_time as $item) {
                         EventSchedule::create([
                             'event_id' => $this->record->id,
