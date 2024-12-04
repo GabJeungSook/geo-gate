@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FCMController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DeviceController;
 
@@ -32,6 +33,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('devices/register', [DeviceController::class, 'storeOrUpdate']);
     Route::delete('devices/{deviceId}', [DeviceController::class, 'destroy']);
+
+
+    Route::get('active-event', [EventController::class,'getEvent']);
 
     
 });
