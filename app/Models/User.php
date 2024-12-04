@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Course;
 use App\Models\Device;
 use App\Models\UserDetail;
 use Laravel\Sanctum\HasApiTokens;
@@ -87,6 +88,10 @@ class User extends Authenticatable implements HasMedia
     public function scopeWithUserDetails($query)
     {
         return $query->with('userDetails');
+    }
+
+    public function course(){
+        return $this->belongsTo(Course::class);
     }
 
     public function scopeWithRelations($query)
