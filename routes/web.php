@@ -54,6 +54,10 @@ Route::get('/event-details/{record}', function ($record) {
     ->middleware(['auth', 'verified'])
     ->name('event_details');
 
+Route::get('/select-schedule', function () {
+    return view('admin.select_schedule');
+})->middleware(['auth', 'verified'])->name('select-schedule');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
