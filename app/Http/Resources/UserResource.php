@@ -17,7 +17,7 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+           'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'full_name' => $this->fullName(),
@@ -25,7 +25,7 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'image' => $this->getImage(),
             'user_details' => new UserDetailsResource($this->whenLoaded('userDetails')),
-            'course' => new CourseResource($this->whenLoaded('course')), // 
+ 
         ];
     }
 }

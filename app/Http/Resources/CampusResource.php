@@ -17,10 +17,9 @@ class CampusResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name ?? null,
-            'latitude' => $this->longitude ?? null,
+            'latitude' => $this->latitude ?? null, 
             'longitude' => $this->longitude ?? null,
-            'radius' => $this->radius ,
-        
+            'radius' => $this->radius ?? null,
         ];
     }
 }

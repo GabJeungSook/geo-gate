@@ -90,9 +90,7 @@ class User extends Authenticatable implements HasMedia
         return $query->with('userDetails');
     }
 
-    public function course(){
-        return $this->belongsTo(Course::class);
-    }
+    
 
     public function scopeWithRelations($query)
     {
