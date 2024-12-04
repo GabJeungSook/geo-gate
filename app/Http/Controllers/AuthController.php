@@ -123,10 +123,10 @@ class AuthController extends Controller
     
     $validated = $request->validate([
         
-        'first_name' => 'somtimes|string|max:255',
-        'last_name' => 'somtimes|string|max:255',
-        'full_address' => 'somtimes|string|max:500',
-        'birthday' => 'somtimes|date',
+        'first_name' => 'sometimes|string|max:255',
+        'last_name' => 'sometimes|string|max:255',
+        'full_address' => 'sometimes|string|max:500',
+        'birthday' => 'sometimes|date',
         'course_id' => 'required|exists:courses,id',
     ]);
 
