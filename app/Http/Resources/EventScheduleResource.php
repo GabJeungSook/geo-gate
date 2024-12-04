@@ -14,10 +14,11 @@ class EventScheduleResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $preRegistration = $this->preRegistrations
-        ->where('user_id', $request->user()->id)
-        ->where('event_schedule_id', $this->id) // Match this schedule ID
-        ->first();
+        $preRegistration = $this->preRegistrations && $this->preRegistrations->count() > 0
+            ? $this->preRegistrations->where('user_id', $request->user()->id)
+                                     ->where('event_schedule_id', $this->id)
+                                     ->first()
+            : null;
 
         return [
         'id' => $this->id,
@@ -32,7 +33,7 @@ class EventScheduleResource extends JsonResource
         'attendances' => AttendanceResource::collection($this->whenLoaded('attendances')),
         'pre_registrations' => PreRegistrationResource::collection($this->whenLoaded('preRegistrations')), 
         'has_pre_registration' => $preRegistration ? new PreRegistrationResource($preRegistration) : null, 
-            
+        
         ];
     }
 }
