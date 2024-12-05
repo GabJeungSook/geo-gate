@@ -55,7 +55,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::get('/send-notification', function(){
     $response = FCMController::sendPushNotification(
-        'fUyNeZkhQ-6wn2-S-Jn48C:APA91bHZSBE0Lu8bOBpc98TPcXi6BywPoTpFr9aXfQjuJjIhK_6H8mlaoNRdpu_U2YXbLghaM-v1DiNH_8jMLcrhLcoCoPL4eiF8ioZp8oacivLXBqi1SC8',
+        'e43CZDRWT_Sj2_jJGvW0VS:APA91bGH6l3qXU2sdqBMRo677q4bnhMk2UGyh3ZYoq1Fh8dAbsrPY0YN3jaVbAv6Z6KtHCIKGE73tTBGyZbyKDUn0B4D1sDGzJtRYk5TbQgrCRKXIzyNU38',
         'Task Assigned',
         'This is a test message',
         ['notification' => 'task']
