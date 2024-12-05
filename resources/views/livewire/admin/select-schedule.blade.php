@@ -7,9 +7,9 @@
 
     @if (is_null($record))
         <!-- No Active Schedule UI -->
-        <div class="flex flex-col items-center justify-center h-screen">
+        <div class="flex flex-col items-center justify-center">
             <h1 class="text-3xl font-bold text-gray-700 mb-4">No Active Schedule</h1>
-            <p class="text-lg text-gray-600">Please contact the administrator or check back later.</p>
+            <p class="text-lg text-gray-600">Please activate an event schedule first.</p>
         </div>
     @else
         @if (!$scanning)

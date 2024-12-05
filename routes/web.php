@@ -58,6 +58,10 @@ Route::get('/select-schedule', function () {
     return view('admin.select_schedule');
 })->middleware(['auth', 'verified'])->name('select-schedule');
 
+Route::get('/view-attendance', function () {
+    return view('admin.view-attendance');
+})->middleware(['auth', 'verified'])->name('view-attendance');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
