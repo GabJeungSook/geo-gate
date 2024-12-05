@@ -33,7 +33,7 @@ class Event extends Model
 
      public function scopeWithRelations($query)
    {
-       return $query->with(['campus','eventSchedules']);
+       return $query->with(['campus','eventSchedules.attendances.user','eventSchedules.preRegistrations.user']);
    }
 
    public function firstActiveSchedule()
