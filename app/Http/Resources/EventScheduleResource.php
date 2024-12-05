@@ -15,10 +15,10 @@ class EventScheduleResource extends JsonResource
     public function toArray(Request $request): array
     {
         $preRegistration = $this->preRegistrations && $this->preRegistrations->count() > 0
-        ? $this->preRegistrations->where('user_id', $request->user()->id)
-                                 ->where('event_schedule_id', $this->id)
-                                 ->first()
-        : null;
+    ? $this->preRegistrations->where('user_id', $request->user()->id)
+                             ->where('event_schedule_id', $this->id)
+                             ->first()
+    : null;
 
     return [
         'id' => $this->id,

@@ -18,10 +18,7 @@ class EventSchedule extends Model
         return $this->belongsTo(Event::class);
     }
 
-    public function pre_registrations(){
-        return $this->hasMany(PreRegistration::class);
-    }
-
+    
 
 
     public function attendances(){
@@ -32,7 +29,11 @@ class EventSchedule extends Model
     public function scopeWithRelations($query){
         $query->with(['event','attendances','preRegistrations',]);
     }
-
+    public function preRegistrations()
+    {
+        return $this->hasMany(PreRegistration::class);
+    }
+    
 
     
    
