@@ -81,9 +81,7 @@ class AttendanceController extends Controller
         return ApiResponse::success([], 'Checked out successfully');
     }
 
-    /**
-     * Mark as absent (geofence-based).
-     */
+ 
     public function markAbsent(Request $request)
 {
     $validated = $request->validate([
@@ -91,30 +89,28 @@ class AttendanceController extends Controller
         'user_id' => 'required|exists:users,id',
     ]);
 
-    // Check if the event schedule is still active
+  
     $eventSchedule = EventSchedule::find($validated['event_schedule_id']);
 
     if (!$eventSchedule || !$eventSchedule->is_active) {
         return ApiResponse::error('Cannot mark absent. The event schedule is not active.', 400);
     }
 
-    // Proceed to mark user as absent
+   
     $attendance = Attendance::firstOrNew([
         'event_schedule_id' => $validated['event_schedule_id'],
         'user_id' => $validated['user_id'],
     ]);
 
     $attendance->is_present = false;
-    $attendance->geofence_out = Carbon::now(); // Time the user was marked as outside geofence
+    $attendance->geofence_out = Carbon::now(); 
     $attendance->save();
 
     return ApiResponse::success([], 'User marked as absent successfully');
 }
 
 
-    /**
-     * Update geofence data when a user exits the geofence.
-     */
+   
     public function updateGeofenceOut(Request $request)
     {
         $validated = $request->validate([
