@@ -41,6 +41,7 @@
 <body class="">
     <div class="overflow-x-hidden">
         @livewire('header')
+
         {{ $slot }}
         @if (!Route::is('edit-profile'))
         @livewire('footer')
