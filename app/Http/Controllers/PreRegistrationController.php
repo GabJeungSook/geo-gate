@@ -58,12 +58,16 @@ class PreRegistrationController extends Controller
             'qr_code' => 'nullable|string',
         ]);
     
-
-        $eventSchedule = EventSchedule::findOrFail($validatedData['event_schedule_id']);
-        if (!$eventSchedule->is_active) {
-            return ApiResponse::error('The schedule is no longer active.', 400); 
+        $eventSchedule = EventSchedule::with('event')->findOrFail($validatedData['event_schedule_id']);
+    
+        
+        if (!$eventSchedule->event->is_active) {
+            return ApiResponse::error('The event is no longer active.', 409); 
         }
     
+        if (!$eventSchedule->is_active) {
+            return ApiResponse::error('The schedule is no longer active.', 400);
+        }
     
         $existingPreRegistration = PreRegistration::where('event_schedule_id', $validatedData['event_schedule_id'])
             ->where('user_id', $request->user()->id)
@@ -73,11 +77,9 @@ class PreRegistrationController extends Controller
     
         try {
             if ($existingPreRegistration) {
-             
                 $existingPreRegistration->update($validatedData);
                 $message = 'Pre-registration updated successfully';
             } else {
-            
                 $validatedData['user_id'] = $request->user()->id;
                 PreRegistration::create($validatedData);
                 $message = 'Pre-registration created successfully';
@@ -88,10 +90,10 @@ class PreRegistrationController extends Controller
             return ApiResponse::success([], $message);
         } catch (\Exception $e) {
             DB::rollBack();
-    
-            return ApiResponse::error('An error occurred while processing your pre-registration'.$e->getMessage()   , 500);
+            return ApiResponse::error('An error occurred while processing your pre-registration: ' . $e->getMessage(), 500);
         }
     }
+    
     
 
 }
