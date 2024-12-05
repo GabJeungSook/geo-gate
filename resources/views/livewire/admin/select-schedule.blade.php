@@ -42,7 +42,7 @@
                 <h1 class="text-2xl font-bold text-gray-700 mb-2">{{$action}}</h1>
             </div>
             <div class="flex justify-center mt-5">
-                <input wire:model="scannedCode" wire:change="verifyQR" type="text" id="qrInput" class="text-center p-4 text-2xl focus:outline-none w-full mx-14 rounded-md" autofocus>
+                <input wire:model="scannedCode" autocomplete="off" wire:change="verifyQR" type="text" id="qrInput" class="text-center p-4 text-2xl focus:outline-none w-full mx-14 rounded-md" autofocus>
             </div>
             <small class="flex justify-center mt-3 font-medium">*Scan QR Code Here*</small>
             <div class="flex justify-center mt-5">
