@@ -58,7 +58,7 @@ Route::get('/send-notification', function(){
         'e43CZDRWT_Sj2_jJGvW0VS:APA91bGH6l3qXU2sdqBMRo677q4bnhMk2UGyh3ZYoq1Fh8dAbsrPY0YN3jaVbAv6Z6KtHCIKGE73tTBGyZbyKDUn0B4D1sDGzJtRYk5TbQgrCRKXIzyNU38',
         'Task Assigned',
         'This is a test message',
-        ['notification' => 'task']
+        [ 'notification_type' => 'absent_notification',]
     );
 
     return $response;
