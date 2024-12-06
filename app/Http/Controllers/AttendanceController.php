@@ -83,32 +83,32 @@ class AttendanceController extends Controller
 
  
     public function markAbsent(Request $request)
-{
-    $validated = $request->validate([
-        'event_schedule_id' => 'required|exists:event_schedules,id',
-        'user_id' => 'required|exists:users,id',
-    ]);
-
-  
-    $eventSchedule = EventSchedule::find($validated['event_schedule_id']);
-
-    if (!$eventSchedule || !$eventSchedule->is_active) {
-        return ApiResponse::error('Cannot mark absent. The event schedule is not active.', 400);
+    {
+        $validated = $request->validate([
+            'attendance_id' => 'required|exists:attendances,id',
+        ]);
+    
+        
+        $attendance = Attendance::find($validated['attendance_id']);
+    
+        if (!$attendance) {
+            return ApiResponse::error('Attendance record not found.', 404);
+        }
+    
+       
+        $eventSchedule = $attendance->eventSchedule;
+        if (!$eventSchedule || !$eventSchedule->is_active) {
+            return ApiResponse::error('Cannot mark absent. The event schedule is not active.', 400);
+        }
+    
+       
+        $attendance->is_present = false;
+        $attendance->geofence_out = Carbon::now(); 
+        $attendance->save();
+    
+        return ApiResponse::success([], 'User marked as absent successfully');
     }
-
-   
-    $attendance = Attendance::firstOrNew([
-        'event_schedule_id' => $validated['event_schedule_id'],
-        'user_id' => $validated['user_id'],
-    ]);
-
-    $attendance->is_present = false;
-    $attendance->geofence_out = Carbon::now(); 
-    $attendance->save();
-
-    return ApiResponse::success([], 'User marked as absent successfully');
-}
-
+    
 
    
     public function updateGeofenceOut(Request $request)
