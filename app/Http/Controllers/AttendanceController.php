@@ -116,7 +116,7 @@ class AttendanceController extends Controller
                     "You have been marked as absent for the event '{$eventSchedule->event->event_description}' on " . Carbon::now()->format('l, F j, Y g:i A'),
                     [
                         'user_id' => $user->id,
-                        'notification' => 'absent_notification',
+                        'notification_type' => 'absent_notification',
                     ]
                 );
                 
