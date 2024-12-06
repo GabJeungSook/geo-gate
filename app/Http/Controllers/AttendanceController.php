@@ -7,6 +7,7 @@ use App\Models\Attendance;
 use App\Helpers\ApiResponse;
 use Illuminate\Http\Request;
 use App\Models\EventSchedule;
+use App\Notifications\MarkAbsent;
 use Illuminate\Support\Facades\DB;
 
 class AttendanceController extends Controller
@@ -105,6 +106,21 @@ class AttendanceController extends Controller
         $attendance->is_present = false;
         $attendance->geofence_out = Carbon::now(); 
         $attendance->save();
+        $user = $request->user();
+        $user->notify(new MarkAbsent($user->id, 'Mark as absent', $user->userDetails->full_name));
+
+            foreach ($user->deviceTokens() as $token) {
+                FCMController::sendPushNotification(
+                    $token,
+                    'Absent Notification',
+                    "You have been marked as absent for the event '{$eventSchedule->event->event_description}' on " . Carbon::now()->format('l, F j, Y g:i A'),
+                    [
+                        'user_id' => $user->id,
+                        'notification' => 'absent_notification',
+                    ]
+                );
+                
+            }
     
         return ApiResponse::success([], 'User marked as absent successfully');
     }
