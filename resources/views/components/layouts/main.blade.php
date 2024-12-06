@@ -210,11 +210,12 @@
                 <li>
                   <!-- Current: "bg-indigo-700 text-white", Default: "text-indigo-200 hover:text-white hover:bg-indigo-700" -->
                   <a wire:navigate href="{{route('dashboard')}}" 
-                  class="{{request()->routeIs('dashboard') ? 'text-green-600 bg-gray-100 mb-5  roboto-medium hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold' : 'mb-5  roboto-medium text-gray-50 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold'}}">
+                  class="{{request()->routeIs('dashboard') ? 'text-green-600 bg-gray-100 mb-5  roboto-medium hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold' : 'mb-5  roboto-medium text-gray-50 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold'}}"> 
                     <svg class="size-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
-                    </svg>                    
-                    Dashboard
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                                     
+                    Home
                   </a>
                 </li>
                 <li>
@@ -229,7 +230,7 @@
                         Campuses
                       </a>
                     </li>
-                    <li>
+                    {{-- <li>
                       <a wire:navigate href="{{route('courses')}}" 
                       class="{{request()->routeIs('courses') ? 'text-green-600 bg-gray-100 roboto-medium hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold' : 'roboto-medium text-gray-50 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold'}}">
                         <svg class="size-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -237,7 +238,7 @@
                         </svg>
                         Courses
                       </a>
-                    </li>
+                    </li> --}}
                     <li>
                       <a wire:navigate href="{{route('events')}}" 
                       class="{{request()->routeIs('events') ? 'text-green-600 bg-gray-100 roboto-medium hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold' : 'roboto-medium text-gray-50 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold'}}">
@@ -252,7 +253,7 @@
                 </li>
               
                 <li>
-                  <div class="text-sm font-semibold text-indigo-200 mt-3">Attendance</div>
+                  <div class="text-sm font-semibold text-gray-300 mt-3">Attendance</div>
                   <ul role="list" class="-mx-2 mt-2 space-y-1">
                     <li>
                       <a href="{{route('select-schedule')}}" 
@@ -278,22 +279,25 @@
                   </ul>
                 </li>
                 <li>
-                  <div class="text-sm font-semibold text-indigo-200 mt-3">Reports</div>
+                  <div class="text-sm font-semibold text-gray-300 mt-3">Reports</div>
                   <ul role="list" class="-mx-2 mt-2 space-y-1">
                     <li>
-                      <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white">
-                        <svg class="size-6 shrink-0 text-indigo-200 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                      <a href="{{route('report.pre-registration')}}" 
+                      class="{{request()->routeIs('report.pre-registration') ? 'text-green-600 bg-gray-100 roboto-medium hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold' : 'roboto-medium text-gray-50 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold'}}">                        
+                        <svg class="size-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                         </svg>
-                        Team
+                        
+                        Pre-Registrations
                       </a>
                     </li>
                     <li>
-                      <a href="#" class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-700 hover:text-white">
-                        <svg class="size-6 shrink-0 text-indigo-200 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                      <a href="{{route('report.attendance')}}" 
+                      class="{{request()->routeIs('report.attendance') ? 'text-green-600 bg-gray-100 roboto-medium hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold' : 'roboto-medium text-gray-50 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md px-1 py-2 text-sm leading-6 font-semibold'}}">                        
+                        <svg class="size-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                         </svg>
-                        Projects
+                        Attendances
                       </a>
                     </li>
                   </ul>

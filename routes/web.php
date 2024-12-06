@@ -62,6 +62,14 @@ Route::get('/view-attendance', function () {
     return view('admin.view-attendance');
 })->middleware(['auth', 'verified'])->name('view-attendance');
 
+Route::get('/report/pre-registration', function () {
+    return view('reports.pre-registration');
+})->middleware(['auth', 'verified'])->name('report.pre-registration');
+
+Route::get('/report/attendance', function () {
+    return view('reports.attendance');
+})->middleware(['auth', 'verified'])->name('report.attendance');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
