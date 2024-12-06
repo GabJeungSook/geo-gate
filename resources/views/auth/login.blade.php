@@ -1,7 +1,6 @@
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -33,11 +32,11 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
+            {{-- @if (Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
-            @endif
+            @endif --}}
 
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
@@ -45,8 +44,8 @@
         </div>
     </form>
 
-    <a href="{{ route('auth.google.redirect') }}" class="flex items-center justify-center w-full border border-gray-300 rounded-lg p-2 hover:bg-gray-100 shadow-md">
+    {{-- <a href="{{ route('auth.google.redirect') }}" class="flex items-center justify-center w-full border border-gray-300 rounded-lg p-2 hover:bg-gray-100 shadow-md">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Icon" class="h-5 w-5 mr-2">
         <span class="font-medium text-gray-600">Continue With Google</span>
-    </a>
+    </a> --}}
 </x-guest-layout>
