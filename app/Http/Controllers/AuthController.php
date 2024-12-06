@@ -58,6 +58,11 @@ class AuthController extends Controller
         try {
             $googleUser = Socialite::driver('google')->userFromToken($request->input('token'));
 
+            if (!str_ends_with($googleUser->getEmail(), '@sksu.edu.ph')) {
+                return ApiResponse::error('Only institutional emails are allowed.', 403);
+            }
+            
+
             DB::beginTransaction();
 
            
