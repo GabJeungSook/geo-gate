@@ -104,7 +104,7 @@ class AttendanceController extends Controller
     
        
         $attendance->is_present = false;
-        $attendance->geofence_out = Carbon::now(); 
+        $attendance->geofence_out =  now(); 
         $attendance->save();
         $user = $request->user();
         $user->notify(new MarkAbsent($user->id, 'Mark as absent', $user->userDetails->full_name));
