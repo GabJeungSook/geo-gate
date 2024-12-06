@@ -20,6 +20,11 @@ class EventScheduleResource extends JsonResource
                              ->first()
     : null;
 
+    $attendance = $this->attendances && $this->attendances->count() > 0
+            ? $this->attendances->where('user_id', $request->user()->id)
+                                ->first()
+            : null;
+
     return [
         'id' => $this->id,
         'event_id' => $this->event_id,
@@ -33,6 +38,7 @@ class EventScheduleResource extends JsonResource
         'attendances' => AttendanceResource::collection($this->whenLoaded('attendances')),
         'pre_registrations' => PreRegistrationResource::collection($this->whenLoaded('preRegistrations')), 
         'has_pre_registration' => $preRegistration ? new PreRegistrationResource($preRegistration) : null, 
+        'has_attendance' => $attendance ? new AttendanceResource($attendance) : null,
     ];
     }
 }
