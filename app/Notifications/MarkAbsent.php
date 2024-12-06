@@ -14,9 +14,15 @@ class MarkAbsent extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(public $modelId,public $title,public $body)
+    private $userId;
+    private $title;
+    private $body;
+
+    public function __construct($userId, $title, $body)
     {
-        //
+        $this->userId = $userId;
+        $this->title = $title;
+        $this->body = $body;
     }
 
     public function via(object $notifiable): array
@@ -27,9 +33,9 @@ class MarkAbsent extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'model_id'=>$this->modelId,
-            'title'=>$this->title,
-            'body'=>$this->body,
+            'model_id' => $this->userId,
+            'title' => $this->title,
+            'body' => $this->body,
         ];
     }
 }
