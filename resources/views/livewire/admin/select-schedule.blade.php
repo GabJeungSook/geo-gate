@@ -77,7 +77,11 @@
                             @forelse($attendance as $item)
                                 <tr>
                                     <td class="border border-gray-300 px-4 py-2">{{$item->user->userDetails->first_name}} {{$item->user->userDetails->last_name}}</td>
+                                    @if($action === "Time In")
                                     <td class="border border-gray-300 px-4 py-2">{{$item->in}}</td>
+                                    @else
+                                    <td class="border border-gray-300 px-4 py-2">{{$item->out}}</td>
+                                    @endif
                                 </tr>
                             @empty   
                             <tr>
