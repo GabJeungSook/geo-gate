@@ -257,10 +257,15 @@ class CourseSeeder extends Seeder
     ]);
 
     $campus = Campus::create([
-        "name" => "Brian Campus",
+        "name" => "Test Campus",
         'latitude' => '6.63220252411989',
         'longitude' => '124.60018272125544',
-        'radius' => '20',
+        'radius' => '75',
+    ]);
+    
+    $campus->courses()->create([
+        'course_code' => 'TST-CRS',
+        "course_description" => "Test Cpirse"
     ]);
     }
 }
