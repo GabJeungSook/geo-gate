@@ -76,7 +76,7 @@
                         <tbody>
                             @forelse($attendance as $item)
                                 <tr>
-                                    <td class="border border-gray-300 px-4 py-2">{{$item->user->userDetails}}</td>
+                                    <td class="border border-gray-300 px-4 py-2">{{$item->user->userDetails->first_name}} {{$item->user->userDetails->last_name}}</td>
                                     <td class="border border-gray-300 px-4 py-2">{{$item->in}}</td>
                                 </tr>
                             @empty   
