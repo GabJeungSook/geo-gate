@@ -15,16 +15,24 @@ class SelectSchedule extends Component
     public $record;
     public $scanning = false; // Controls whether scanning UI is displayed
     public $action; // Stores the selected action: Time In or Time Out
+    public $attendance;
 
     public function mount()
     {
         $this->record = EventSchedule::where('is_active', true)->first();
+        $this->attendance = Attendance::where('event_schedule_id', $this->record->id)->get();
     }
 
     public function startScanning($action)
     {
         $this->action = $action; // Set the action (Time In or Time Out)
         $this->scanning = true; // Show the scanning input
+        if($this->action === 'Time In')
+        {
+            $this->attendance = Attendance::where('event_schedule_id', $this->record->id)->whereNotNull('in')->get();
+        }else{
+            $this->attendance = Attendance::where('event_schedule_id', $this->record->id)->whereNotNull('out')->get();
+        }
     }
 
     public function stopScanning()
@@ -143,6 +151,7 @@ class SelectSchedule extends Component
                 ->body('Successfully scanned QR code for ' . $user->user->name)
                 ->success()
                 ->send();
+            $this->attendance = Attendance::where('event_schedule_id', $this->record->id)->get();
         }
     }
     

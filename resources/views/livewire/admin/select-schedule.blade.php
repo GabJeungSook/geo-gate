@@ -32,24 +32,63 @@
             </div>
         @else
             <!-- Scanning UI -->
-            <div class="flex flex-col items-center justify-center">
-                <h1 class="text-2xl font-bold text-gray-700 mb-2">{{$record->event->event_description}}</h1>
-                <h1 class="text-2xl font-bold text-gray-700 mb-2">{{$record->event->campus->name}}</h1>
-                <h1 class="text-2xl font-bold text-gray-700 mb-2">{{Carbon\Carbon::parse($record->schedule_date)->format('F d, Y')}}</h1>
-                <h1 class="text-2xl font-bold text-gray-700">
-                    {{Carbon\Carbon::parse($record->start_time)->format('h:i A')}} - 
-                    {{Carbon\Carbon::parse($record->end_time)->format('h:i A')}}</h1>            
-                <h1 class="text-2xl font-bold text-gray-700 mb-2">{{$action}}</h1>
+            <div class="flex justify-between">
+                <!-- Scanning UI -->
+                <div class="flex flex-col items-center justify-center w-1/2">
+                    <h1 class="text-2xl font-bold text-gray-700 mb-2">{{$record->event->event_description}}</h1>
+                    <h1 class="text-2xl font-bold text-gray-700 mb-2">{{$record->event->campus->name}}</h1>
+                    <h1 class="text-2xl font-bold text-gray-700 mb-2">
+                        {{Carbon\Carbon::parse($record->schedule_date)->format('F d, Y')}}
+                    </h1>
+                    <h1 class="text-2xl font-bold text-gray-700">
+                        {{Carbon\Carbon::parse($record->start_time)->format('h:i A')}} - 
+                        {{Carbon\Carbon::parse($record->end_time)->format('h:i A')}}
+                    </h1>
+                    <h1 class="text-2xl font-bold text-gray-700 mb-2">{{$action}}</h1>
+            
+                    <div class="flex justify-center mt-5">
+                        <input wire:model="scannedCode" autocomplete="off" wire:change="verifyQR" type="text" id="qrInput" 
+                               class="text-center p-4 text-2xl focus:outline-none w-full mx-14 rounded-md" autofocus>
+                    </div>
+                    <small class="flex justify-center mt-3 font-medium">*Scan QR Code Here*</small>
+            
+                    <div class="flex justify-center mt-5">
+                        <button wire:click="stopScanning" class="px-6 py-3 bg-gray-500 text-white font-medium rounded-md hover:bg-gray-600">
+                            Stop Scanning
+                        </button>
+                    </div>
+                </div>
+            
+                <!-- Table Section -->
+                <div class="w-1/2">
+                    <h2 class="text-xl font-bold text-gray-700 mb-4 text-center">Attendance Records</h2>
+                    <table class="min-w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 px-4 py-2 text-left">Student Name</th>
+                                @if($action === "Time In")
+                                <th class="border border-gray-300 px-4 py-2 text-left">Time In</th>
+                                @else
+                                <th class="border border-gray-300 px-4 py-2 text-left">Time Out</th>
+                                @endif
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($attendance as $item)
+                                <tr>
+                                    <td class="border border-gray-300 px-4 py-2">{{$item->user->userDetails}}</td>
+                                    <td class="border border-gray-300 px-4 py-2">{{$item->in}}</td>
+                                </tr>
+                            @empty   
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2 text-center" colspan="2">No Record Yet</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="flex justify-center mt-5">
-                <input wire:model="scannedCode" autocomplete="off" wire:change="verifyQR" type="text" id="qrInput" class="text-center p-4 text-2xl focus:outline-none w-full mx-14 rounded-md" autofocus>
-            </div>
-            <small class="flex justify-center mt-3 font-medium">*Scan QR Code Here*</small>
-            <div class="flex justify-center mt-5">
-                <button wire:click="stopScanning" class="px-6 py-3 bg-gray-500 text-white font-medium rounded-md hover:bg-gray-600">
-                    Stop Scanning
-                </button>
-            </div>
+            
         @endif
     @endif
 </div>
