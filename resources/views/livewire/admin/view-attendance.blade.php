@@ -8,13 +8,13 @@
             {{Carbon\Carbon::parse($eventSchedule->end_time)->format('h:i A')}}</p>
     </div>
     <h1></h1>
-    <div id="map" style="height: 390px;"></div>
+    {{-- <div id="map" style="height: 390px;"></div> --}}
 
-    <div class="pt-6 text-xl text-gray-600 roboto-medium">
+    {{-- <div class="pt-6 text-xl text-gray-600 roboto-medium">
         Currently present: {{$users->count()}}
-    </div>
+    </div> --}}
     <div class="border-t border-gray-400 border-dashed py-2 text-4xl roboto-medium text-gray-700 space-y-2 mt-4">
-        <h1 class="mb-4">Students</h1>
+        {{-- <h1 class="mb-4">Students</h1> --}}
         <div>
             {{$this->table}}
         </div>
