@@ -165,16 +165,27 @@ class SelectSchedule extends Component
             ->first();
     
         if ($attendance) {
-            // Record Time Out
-            $attendance->update([
-                'out' => now(),
-            ]);
-    
-            Notification::make()
-                ->title('Success')
-                ->body('Successfully recorded Time Out for ' . $user->user->name)
-                ->success()
+
+            if($attendance->geofence_out != null)
+            {
+                Notification::make()
+                ->title('Operation Failed')
+                ->body('User already marked as absent')
+                ->danger()
                 ->send();
+            }else{
+                // Record Time Out
+                $attendance->update([
+                    'out' => now(),
+                ]);
+
+                Notification::make()
+                    ->title('Success')
+                    ->body('Successfully recorded Time Out for ' . $user->user->name)
+                    ->success()
+                    ->send();
+            }
+           
         } else {
             Notification::make()
                 ->title('Operation Failed')
